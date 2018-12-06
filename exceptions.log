@@ -1,0 +1,4 @@
+Dec 06, 2018 11:30:19 PM ro.bogdanpanea.validarestudenti.StudentRepository retrieveStudents
+INFO: Student{firstName='Bobi', lastName='Maniu', dateOfBirth='12/04/2017', gender='M', id='1234'}
+Dec 06, 2018 11:30:19 PM ro.bogdanpanea.validarestudenti.StudentRepository retrieveStudents
+INFO: Student{firstName='Ana', lastName='Petrache', dateOfBirth='28/08/1995', gender='f', id='1235'}
