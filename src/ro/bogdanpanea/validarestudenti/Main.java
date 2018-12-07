@@ -12,7 +12,7 @@ public class Main {
         StudentRepository studentRepository = new StudentRepository();
         studentRepository.addStudent( "Bobi", "Maniu", "12/04/2017", "M", "1234" );
         studentRepository.addStudent( "Ana", "Petrache", "28/08/1995", "f", "1235" );
-        //studentRepository.retrieveStudents("22");
+        studentRepository.retrieveStudents("1");
 
         //System.out.println( studentRepository.getStudents().get(1).getGender() );
 //        LocalDate today = LocalDate.now();

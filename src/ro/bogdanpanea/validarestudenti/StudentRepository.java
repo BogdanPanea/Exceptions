@@ -28,7 +28,7 @@ public class StudentRepository implements Students {
     @Override
     public void deleteStudent(String id) {
 
-        if (id != "") {
+        if (!id.equals( "" )) {
 
             if (isNumeric( id )) {
                 boolean exist = false;
@@ -64,12 +64,12 @@ public class StudentRepository implements Students {
 
                 LocalDate today = LocalDate.now();
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
-
                 for (Student s : students) {
 
-                    LocalDate birthday = LocalDate.parse( age, formatter );
-                    Period p = Period.between( birthday, today );
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
+                    LocalDate birthday = LocalDate.parse(s.getDateOfBirth(), formatter);
+
+                    Period p = Period.between(birthday, today);
 
                     if (p.getYears() == Integer.parseInt( age )) {
 
