@@ -1,4 +1,4 @@
-Dec 07, 2018 7:55:22 PM ro.bogdanpanea.validarestudenti.StudentRepository retrieveStudents
-INFO: Student{firstName='Bobi', lastName='Maniu', dateOfBirth='12/04/2017', gender='M', id='1234'}
-Dec 07, 2018 7:55:22 PM ro.bogdanpanea.validarestudenti.StudentRepository retrieveStudents
+Dec 13, 2018 10:52:07 PM ro.bogdanpanea.validarestudenti.StudentRepository addStudent
+SEVERE: Genul trebuie ales din urmatoarea lista : F, M, f, m !
+Dec 13, 2018 10:52:07 PM ro.bogdanpanea.validarestudenti.StudentRepository listOrderedStudents
 INFO: Student{firstName='Ana', lastName='Petrache', dateOfBirth='28/08/1995', gender='f', id='1235'}

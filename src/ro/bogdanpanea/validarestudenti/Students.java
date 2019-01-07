@@ -8,5 +8,5 @@ public interface Students {
 
     void retrieveStudents(String age);
 
-    <T> void listOrderedStudents(T t);
+    void listOrderedStudents(String studentsListOrder);
 }

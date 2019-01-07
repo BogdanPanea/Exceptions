@@ -3,11 +3,12 @@ package ro.bogdanpanea.validarestudenti;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.logging.Logger;
 
 public class Student {
 
-    private static Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static Logger LOGGER = Logger.getLogger( Main.class.getName() );
 
     private String firstName;
     private String lastName;
@@ -15,25 +16,42 @@ public class Student {
     private String gender;
     private String id;
 
-    public Student(String firstName, String lastName, String dateOfBirth, String gender, String id) {
+    public Student(String firstName, String lastName, String dateOfBirth, String gender, String id) throws StudentRepositoryExceptions {
 
-        if (validateFirstName( firstName )) {
-            this.firstName = firstName;
+        if (!firstName.equals( "" )) {
 
+            if (validateFirstName( firstName )) {
+                this.firstName = firstName;
+
+            } else {
+                throw new StudentRepositoryExceptions( "Prenumele trebuia sa contina doar litere !", "Prenume incorect." );
+            }
         } else {
+            throw new StudentRepositoryExceptions( "Prenumele trebuie sa contina macar un caracter !", "Prenume vid." );
         }
 
-        if (validateLastName( lastName )) {
-            this.lastName = lastName;
+        if (!lastName.equals( "" )) {
 
+
+            if (validateLastName( lastName )) {
+                this.lastName = lastName;
+
+            } else {
+
+                throw new StudentRepositoryExceptions( "Numele trebuia sa contina doar litere sau caracterul - !", "Nume incorect." );
+            }
         } else {
-        }
 
+            throw new StudentRepositoryExceptions( "Numele trebuie sa contina macar un caracter !", "Nume vid." );
+
+        }
 
         if (checkDOB( dateOfBirth )) {
             this.dateOfBirth = dateOfBirth;
 
         } else {
+
+            throw new StudentRepositoryExceptions("Data nasterii trebuie sa fie intre anul 1900 si anul curent !", "Data nasterii incorecta." );
         }
 
 
@@ -41,16 +59,22 @@ public class Student {
 
             this.gender = gender;
         } else {
+
+            throw new StudentRepositoryExceptions( "Genul trebuie ales din urmatoarea lista : F, M, f, m !", "Gen incorect." );
         }
-        if (! id.equals("")) {
+        if (!id.equals( "" )) {
 
             if (isNumeric( id )) {
                 this.id = id;
 
             } else {
 
+                throw new StudentRepositoryExceptions( "CNP - ul trebuie sa fie numeric !", "CNP incorect." );
+
             }
         } else {
+
+            throw new StudentRepositoryExceptions( "CNP - ul  nu poate fi vid !", "CNP vid." );
         }
     }
 
@@ -119,6 +143,27 @@ public class Student {
                 ", gender='" + gender + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    public static Comparator<Student> getCompByLastName() {
+        Comparator comp = new Comparator<Student>() {
+            @Override
+            public int compare(Student s1, Student s2) {
+                return s1.getLastName().compareTo( s2.getLastName() );
+            }
+        };
+        return comp;
+    }
+
+    public static Comparator<Student> getCompByBirthDate() {
+        Comparator comp = new Comparator<Student>() {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
+
+            public int compare(Student s1, Student s2) {
+                return LocalDate.parse( s1.getDateOfBirth(), formatter ).compareTo( LocalDate.parse( s2.getDateOfBirth(), formatter ) );
+            }
+        };
+        return comp;
     }
 }
 

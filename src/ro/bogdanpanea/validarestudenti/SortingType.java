@@ -1,7 +1,6 @@
 package ro.bogdanpanea.validarestudenti;
 
-public enum Gender {
+public enum SortingType {
     F, M, f, m
 
 }
-
