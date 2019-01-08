@@ -20,97 +20,81 @@ public class StudentRepository implements Students {
     }
 
     @Override
-    public void addStudent(String firstName, String lastName, String dateOfBirth, String gender, String id) {
+    public void addStudent(String firstName, String lastName, String dateOfBirth, String gender, String id) throws StudentRepositoryExceptions {
 
-        try {
-            Student student = new Student( firstName, lastName, dateOfBirth, gender, id );
-            students.add( student );
+        Student student = new Student(firstName, lastName, dateOfBirth, gender, id);
+        students.add(student);
 
-        } catch (StudentRepositoryExceptions e) {
-
-            LOGGER.log( Level.SEVERE, e.getMessage());
-        }
     }
+
     @Override
-    public void deleteStudent(String id) {
+    public void deleteStudent(String id) throws StudentRepositoryExceptions {
 
-        try {
-            if (!id.equals( "" )) {
+        if (!id.equals("")) {
 
-                if (isNumeric( id )) {
-                    boolean exist = false;
-                    Student student = null;
-                    for (Student s : students) {
-                        if (s.getId().equals( id )) {
-                            exist = true;
-                            student = s;
-                        }
+            if (isNumeric(id)) {
+                boolean exist = false;
+                Student student = null;
+                for (Student s : students) {
+                    if (s.getId().equals(id)) {
+                        exist = true;
+                        student = s;
                     }
-                    if (exist) {
+                }
+                if (exist) {
 
-                        students.remove( student );
-                        LOGGER.info( "A fost sters." );
-                    } else {
-
-                        throw new StudentRepositoryExceptions( "Nu exista nicio persoana cu acest CNP !", "CNP inexistent." );
-
-                    }
-
+                    students.remove(student);
+                    LOGGER.info("A fost sters.");
                 } else {
 
-                    throw new StudentRepositoryExceptions( "CNP- ul trebuie sa contina doar cifre !", "CNP incorect." );
+                    throw new StudentRepositoryExceptions("Nu exista nicio persoana cu acest CNP !", "CNP inexistent.");
 
                 }
+
             } else {
 
-                throw new StudentRepositoryExceptions( "CNP-ul nu poate fi vid !", "CNP vid." );
-            }
-        } catch (StudentRepositoryExceptions e) {
+                throw new StudentRepositoryExceptions("CNP- ul trebuie sa contina doar cifre !", "CNP incorect.");
 
-            LOGGER.log( Level.SEVERE, e.getMessage());
+            }
+        } else {
+
+            throw new StudentRepositoryExceptions("CNP-ul nu poate fi vid !", "CNP vid.");
         }
 
     }
 
     @Override
-    public void retrieveStudents(String age) {
+    public void retrieveStudents(String age) throws StudentRepositoryExceptions {
 
-        try {
-            if (isNumeric( age )) {
+        if (isNumeric(age)) {
 
-                if (Integer.parseInt( age ) >= 0) {
+            if (Integer.parseInt(age) >= 0) {
 
-                    LocalDate today = LocalDate.now();
+                LocalDate today = LocalDate.now();
 
-                    for (Student s : students) {
+                for (Student s : students) {
 
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
-                        LocalDate birthday = LocalDate.parse( s.getDateOfBirth(), formatter );
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                    LocalDate birthday = LocalDate.parse(s.getDateOfBirth(), formatter);
 
-                        Period p = Period.between( birthday, today );
+                    Period p = Period.between(birthday, today);
 
-                        if (p.getYears() == Integer.parseInt( age )) {
+                    if (p.getYears() == Integer.parseInt(age)) {
 
-                            LOGGER.info( s.toString() );
-                        }
+                        LOGGER.info(s.toString());
                     }
-
-                } else {
-
-                    throw new StudentRepositoryExceptions( "Varsta trebuie sa fie un numar pozitiv !", "Varsta negativa." );
-
                 }
+
             } else {
 
-                throw new StudentRepositoryExceptions( "Varsta trebuie sa fie un numar !", "Varsta incorecta." );
+                throw new StudentRepositoryExceptions("Varsta trebuie sa fie un numar pozitiv !", "Varsta negativa.");
 
             }
-        } catch (StudentRepositoryExceptions e) {
+        } else {
 
-            LOGGER.log( Level.SEVERE, e.getMessage());
+            throw new StudentRepositoryExceptions("Varsta trebuie sa fie un numar !", "Varsta incorecta.");
 
         }
-
 
     }
 
@@ -118,56 +102,61 @@ public class StudentRepository implements Students {
 
         for (Student s : students) {
 
-            LOGGER.info( s.toString() );
+            LOGGER.info(s.toString());
         }
 
     }
 
     @Override
-    public void listOrderedStudents (String studentsListOrder) {
-
-        try {
-
-            if(!studentsListOrder.equals( "" )) {
-
-                if(studentsListOrder.equals( "by last name" ) || studentsListOrder.equals( "by date of birth" )) {
-
-                    if (studentsListOrder.equals( "by date of birth" )) {
-                        Collections.sort( students, Student.getCompByBirthDate() );
-
-                    } else {
-
-                        Collections.sort( students, Student.getCompByLastName() );
-                    }
-
-                    for (Student student : students) {
-                        LOGGER.info( student.toString() );
-                    }
-                } else  {
-
-                    throw new StudentRepositoryExceptions( "Alegeti una dintre optiunile : by last name sau by date of birth ! ", "Criteriu de ordanare inexistent." );
+    public void listOrderedStudents(String studentsListOrder) throws StudentRepositoryExceptions {
 
 
+        if (!studentsListOrder.equals("")) {
+
+            if (checkGender(studentsListOrder)) {
+
+                if (studentsListOrder.equals(SortingTypes.valueOf("byDOB"))) {
+                    Collections.sort(students, Student.getCompByBirthDate());
+
+                } else {
+
+                    Collections.sort(students, Student.getCompByLastName());
+                }
+
+                for (Student student : students) {
+                    LOGGER.info(student.toString());
                 }
             } else {
 
-                throw new StudentRepositoryExceptions( "Criteriul de ordonare nu poate fi vid !", "Criteriu de ordanare vid." );
+                throw new StudentRepositoryExceptions("Alegeti una dintre optiunile : byLastName sau byDOB ! ", "Criteriu de ordanare inexistent.");
+
 
             }
+        } else {
 
-        } catch (StudentRepositoryExceptions e) {
+            throw new StudentRepositoryExceptions("Criteriul de ordonare nu poate fi vid !", "Criteriu de ordanare vid.");
 
-            LOGGER.log( Level.SEVERE, e.getMessage() );
         }
+
     }
 
     public static boolean isNumeric(String id) {
         try {
-            double d = Double.parseDouble( id );
+            double d = Double.parseDouble(id);
         } catch (NumberFormatException | NullPointerException nfe) {
             return false;
         }
         return true;
+    }
+
+    public static boolean checkGender(String gender) {
+        for (SortingTypes t : SortingTypes.values()) {
+            if (t.name().equals(gender)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

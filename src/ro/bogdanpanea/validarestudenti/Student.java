@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Student {
 
-    private static Logger LOGGER = Logger.getLogger( Main.class.getName() );
+    private static Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     private String firstName;
     private String lastName;
@@ -18,18 +18,55 @@ public class Student {
 
     public Student(String firstName, String lastName, String dateOfBirth, String gender, String id) throws StudentRepositoryExceptions {
 
-        if (!firstName.equals( "" )) {
+        checkFirstName(firstName);
 
-            if (validateFirstName( firstName )) {
-                this.firstName = firstName;
+        checkLastName(lastName);
+
+        checkDateOfBirth(dateOfBirth);
+
+        validateGender(gender);
+
+        validateID(id);
+    }
+
+    private void validateID(String id) throws StudentRepositoryExceptions {
+        if (!id.equals( "" )) {
+
+            if (isNumeric( id )) {
+                this.id = id;
 
             } else {
-                throw new StudentRepositoryExceptions( "Prenumele trebuia sa contina doar litere !", "Prenume incorect." );
+
+                throw new StudentRepositoryExceptions( "CNP - ul trebuie sa fie numeric !", "CNP incorect." );
+
             }
         } else {
-            throw new StudentRepositoryExceptions( "Prenumele trebuie sa contina macar un caracter !", "Prenume vid." );
-        }
 
+            throw new StudentRepositoryExceptions( "CNP - ul  nu poate fi vid !", "CNP vid." );
+        }
+    }
+
+    public void validateGender(String gender) throws StudentRepositoryExceptions {
+        if (checkGender( gender )) {
+
+            this.gender = gender;
+        } else {
+
+            throw new StudentRepositoryExceptions( "Genul trebuie ales din urmatoarea lista : F, M, f, m !", "Gen incorect." );
+        }
+    }
+
+    public void checkDateOfBirth(String dateOfBirth) throws StudentRepositoryExceptions {
+        if (checkDOB( dateOfBirth )) {
+            this.dateOfBirth = dateOfBirth;
+
+        } else {
+
+            throw new StudentRepositoryExceptions("Data nasterii trebuie sa fie intre anul 1900 si anul curent !", "Data nasterii incorecta." );
+        }
+    }
+
+    public void checkLastName(String lastName) throws StudentRepositoryExceptions {
         if (!lastName.equals( "" )) {
 
 
@@ -45,36 +82,19 @@ public class Student {
             throw new StudentRepositoryExceptions( "Numele trebuie sa contina macar un caracter !", "Nume vid." );
 
         }
+    }
 
-        if (checkDOB( dateOfBirth )) {
-            this.dateOfBirth = dateOfBirth;
+    public void checkFirstName(String firstName) throws StudentRepositoryExceptions {
+        if (!firstName.equals( "" )) {
 
-        } else {
-
-            throw new StudentRepositoryExceptions("Data nasterii trebuie sa fie intre anul 1900 si anul curent !", "Data nasterii incorecta." );
-        }
-
-
-        if (checkGender( gender )) {
-
-            this.gender = gender;
-        } else {
-
-            throw new StudentRepositoryExceptions( "Genul trebuie ales din urmatoarea lista : F, M, f, m !", "Gen incorect." );
-        }
-        if (!id.equals( "" )) {
-
-            if (isNumeric( id )) {
-                this.id = id;
+            if (validateFirstName( firstName )) {
+                this.firstName = firstName;
 
             } else {
-
-                throw new StudentRepositoryExceptions( "CNP - ul trebuie sa fie numeric !", "CNP incorect." );
-
+                throw new StudentRepositoryExceptions( "Prenumele trebuia sa contina doar litere !", "Prenume incorect." );
             }
         } else {
-
-            throw new StudentRepositoryExceptions( "CNP - ul  nu poate fi vid !", "CNP vid." );
+            throw new StudentRepositoryExceptions( "Prenumele trebuie sa contina macar un caracter !", "Prenume vid." );
         }
     }
 
