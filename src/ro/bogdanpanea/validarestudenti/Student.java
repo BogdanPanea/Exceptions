@@ -30,71 +30,71 @@ public class Student {
     }
 
     private void validateID(String id) throws StudentRepositoryExceptions {
-        if (!id.equals( "" )) {
+        if (!id.equals("")) {
 
-            if (isNumeric( id )) {
+            if (isNumeric(id)) {
                 this.id = id;
 
             } else {
 
-                throw new StudentRepositoryExceptions( "CNP - ul trebuie sa fie numeric !", "CNP incorect." );
+                throw new StudentRepositoryExceptions("CNP - ul trebuie sa fie numeric !", "CNP incorect.");
 
             }
         } else {
 
-            throw new StudentRepositoryExceptions( "CNP - ul  nu poate fi vid !", "CNP vid." );
+            throw new StudentRepositoryExceptions("CNP - ul  nu poate fi vid !", "CNP vid.");
         }
     }
 
     public void validateGender(String gender) throws StudentRepositoryExceptions {
-        if (checkGender( gender )) {
+        if (checkGender(gender)) {
 
             this.gender = gender;
         } else {
 
-            throw new StudentRepositoryExceptions( "Genul trebuie ales din urmatoarea lista : F, M, f, m !", "Gen incorect." );
+            throw new StudentRepositoryExceptions("Genul trebuie ales din urmatoarea lista : F, M, f, m !", "Gen incorect.");
         }
     }
 
     public void checkDateOfBirth(String dateOfBirth) throws StudentRepositoryExceptions {
-        if (checkDOB( dateOfBirth )) {
+        if (checkDOB(dateOfBirth)) {
             this.dateOfBirth = dateOfBirth;
 
         } else {
 
-            throw new StudentRepositoryExceptions("Data nasterii trebuie sa fie intre anul 1900 si anul curent !", "Data nasterii incorecta." );
+            throw new StudentRepositoryExceptions("Data nasterii trebuie sa fie intre anul 1900 si anul curent !", "Data nasterii incorecta.");
         }
     }
 
     public void checkLastName(String lastName) throws StudentRepositoryExceptions {
-        if (!lastName.equals( "" )) {
+        if (!lastName.equals("")) {
 
 
-            if (validateLastName( lastName )) {
+            if (validateLastName(lastName)) {
                 this.lastName = lastName;
 
             } else {
 
-                throw new StudentRepositoryExceptions( "Numele trebuia sa contina doar litere sau caracterul - !", "Nume incorect." );
+                throw new StudentRepositoryExceptions("Numele trebuia sa contina doar litere sau caracterul - !", "Nume incorect.");
             }
         } else {
 
-            throw new StudentRepositoryExceptions( "Numele trebuie sa contina macar un caracter !", "Nume vid." );
+            throw new StudentRepositoryExceptions("Numele trebuie sa contina macar un caracter !", "Nume vid.");
 
         }
     }
 
     public void checkFirstName(String firstName) throws StudentRepositoryExceptions {
-        if (!firstName.equals( "" )) {
+        if (!firstName.equals("")) {
 
-            if (validateFirstName( firstName )) {
+            if (validateFirstName(firstName)) {
                 this.firstName = firstName;
 
             } else {
-                throw new StudentRepositoryExceptions( "Prenumele trebuia sa contina doar litere !", "Prenume incorect." );
+                throw new StudentRepositoryExceptions("Prenumele trebuia sa contina doar litere !", "Prenume incorect.");
             }
         } else {
-            throw new StudentRepositoryExceptions( "Prenumele trebuie sa contina macar un caracter !", "Prenume vid." );
+            throw new StudentRepositoryExceptions("Prenumele trebuie sa contina macar un caracter !", "Prenume vid.");
         }
     }
 
@@ -120,16 +120,16 @@ public class Student {
 
 
     public static boolean validateFirstName(String firstName) {
-        return firstName.matches( "[A-Z][a-zA-Z]*" );
+        return firstName.matches("[A-Z][a-zA-Z]*");
     }
 
     public static boolean validateLastName(String lastName) {
-        return lastName.matches( "[a-zA-z]+([ '-][a-zA-Z]+)*" );
+        return lastName.matches("[a-zA-z]+([ '-][a-zA-Z]+)*");
     }
 
     public static boolean checkGender(String gender) {
         for (Gender c : Gender.values()) {
-            if (c.name().equals( gender )) {
+            if (c.name().equals(gender)) {
                 return true;
             }
         }
@@ -139,7 +139,7 @@ public class Student {
 
     public static boolean isNumeric(String id) {
         try {
-            double d = Double.parseDouble( id );
+            double d = Double.parseDouble(id);
         } catch (NumberFormatException | NullPointerException nfe) {
             return false;
         }
@@ -148,10 +148,10 @@ public class Student {
 
     public static boolean checkDOB(String dateOfBirth) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
         LocalDate today = LocalDate.now();
-        LocalDate birthYear = LocalDate.parse( dateOfBirth, formatter );
-        return (birthYear.getYear() >= 1900) && (birthYear.getYear() <= 2018) && birthYear.isBefore( today );
+        LocalDate birthYear = LocalDate.parse(dateOfBirth, formatter);
+        return (birthYear.getYear() >= 1900) && (birthYear.getYear() <= 2018) && birthYear.isBefore(today);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class Student {
         Comparator comp = new Comparator<Student>() {
             @Override
             public int compare(Student s1, Student s2) {
-                return s1.getLastName().compareTo( s2.getLastName() );
+                return s1.getLastName().compareTo(s2.getLastName());
             }
         };
         return comp;
@@ -177,10 +177,10 @@ public class Student {
 
     public static Comparator<Student> getCompByBirthDate() {
         Comparator comp = new Comparator<Student>() {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "d/MM/yyyy" );
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
 
             public int compare(Student s1, Student s2) {
-                return LocalDate.parse( s1.getDateOfBirth(), formatter ).compareTo( LocalDate.parse( s2.getDateOfBirth(), formatter ) );
+                return LocalDate.parse(s1.getDateOfBirth(), formatter).compareTo(LocalDate.parse(s2.getDateOfBirth(), formatter));
             }
         };
         return comp;
