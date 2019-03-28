@@ -1,4 +1,4 @@
-Ian 11, 2019 5:09:20 PM ro.bogdanpanea.validarestudenti.StudentRepository listOrderedStudents
+Mar 28, 2019 1:48:12 PM ro.bogdanpanea.validarestudenti.StudentRepository listOrderedStudents
 INFO: Student{firstName='Bobi', lastName='Maniu', dateOfBirth='12/04/2017', gender='M', id='1234'}
-Ian 11, 2019 5:09:20 PM ro.bogdanpanea.validarestudenti.StudentRepository listOrderedStudents
+Mar 28, 2019 1:48:12 PM ro.bogdanpanea.validarestudenti.StudentRepository listOrderedStudents
 INFO: Student{firstName='Ana', lastName='Petrache', dateOfBirth='28/08/1995', gender='f', id='1235'}

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Lista studenti.iml" filepath="$PROJECT_DIR$/Lista studenti.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Student-repository---Exceptions.iml" filepath="$PROJECT_DIR$/Student-repository---Exceptions.iml" />
     </modules>
   </component>
 </project>
